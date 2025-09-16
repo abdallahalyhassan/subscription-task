@@ -29,4 +29,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('subscriptions/getpandingsubscription', [SubscriptionController::class,"getpandingsubscription"]);
     
     Route::get('subscriptions/showsubscripedpackage', [SubscriptionController::class,"showsubscripedpackage"]);
+    Route::get('subscriptions/usersByPackage/{packagename}', [SubscriptionController::class,"usersByPackage"]);
 });

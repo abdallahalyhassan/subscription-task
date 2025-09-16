@@ -21,12 +21,19 @@ class SubscriptionResource extends JsonResource
                 ? asset('storage/' . $this->screenshot)
                 : null,
             'status' => $this->status,
-            'expire_at' => $this->expire_at,'package'     => [
-            'id'          => $this->package->id ?? null,
-            'name'        => $this->package->name ?? null,
-            'percent'       => $this->package->percent ?? null,
-            'duration'    => $this->package->duration ?? null,
-        ],
+            'expire_at' => $this->expire_at,
+            'user' => $this->whenLoaded('user', [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+            ]),
+
+            'package' => $this->whenLoaded('package', [
+                'id' => $this->package->id,
+                'name' => $this->package->name,
+                'percent' => $this->package->percent,
+                'duration' => $this->package->duration,
+            ]),
         ];
     }
 }

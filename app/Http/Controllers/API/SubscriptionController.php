@@ -24,6 +24,18 @@ class SubscriptionController extends Controller
             $package = Package::findOrFail($request->package_id);
             // $expireAt = now()->addMonths($package->duration);
             // dd($expireAt);
+            $activeSubscription = Subscription::where('user_id', Auth::id())
+                ->where('package_id', $package->id)
+                ->where('status', 'active') 
+                ->where('expire_at', '>', now()) 
+                ->exists();
+
+            if ($activeSubscription ) {
+                return response()->json([
+                    'success' => false,
+                    'massage' => "You already have an active subscription to this package",
+                ], 409);
+            }
             $subscription = Subscription::create([
                 'user_id' => Auth::id(),
                 'package_id' => $package->id,
@@ -176,10 +188,11 @@ class SubscriptionController extends Controller
     public function usersByPackage($packageName)
     {
         try {
-        
-            $package = Package::where('name', $packageName)->firstOrFail();
 
-            
+            $package = Package::where('name', $packageName)->firstOrFail();
+            // $package = Package::all();
+            // dd($package);
+
             $subscriptions = $package->subscriptions()->with('user')->get();
 
             return response()->json([
