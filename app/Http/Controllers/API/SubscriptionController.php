@@ -172,7 +172,7 @@ class SubscriptionController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Subscription updated successfully',
+                'message' => 'Subscription geted successfully',
                 'data' => SubscriptionResource::collection($subscription),
             ]);
         } catch (\Exception $e) {
