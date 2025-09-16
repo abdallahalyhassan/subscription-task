@@ -42,7 +42,6 @@ class SubscriptionController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -96,7 +95,6 @@ class SubscriptionController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -124,7 +122,6 @@ class SubscriptionController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -147,7 +144,6 @@ class SubscriptionController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -171,7 +167,30 @@ class SubscriptionController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
+
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function usersByPackage($packageName)
+    {
+        try {
+        
+            $package = Package::where('name', $packageName)->firstOrFail();
+
+            
+            $subscriptions = $package->subscriptions()->with('user')->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => "Subscribed users for package: {$packageName}",
+                'data' => SubscriptionResource::collection($subscriptions),
+            ]);
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return response()->json([
+                'success' => false,
                 'error' => $e->getMessage(),
             ], 500);
         }

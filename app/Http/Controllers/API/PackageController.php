@@ -50,7 +50,6 @@ class PackageController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -72,7 +71,6 @@ class PackageController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -105,7 +103,6 @@ class PackageController extends Controller
             // Handle unexpected errors
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create package',
                 'error' => $e->getMessage(),
             ], 500);
         }
